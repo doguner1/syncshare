@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyncShare</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        form#text-form {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        textarea[name="text"] {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            display: block;
+        }
+
+        .card form input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        .qr-image {
+            max-width: 200px;
+            width: 100%;
+            margin: 10px auto;
+            display: block;
+        }
+
+        .qr-url {
+            text-align: center;
+            color: #60c2ff;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SyncShare</h1>
+            <p>Telefon ve Bilgisayar Arası Anlık Transfer</p>
+        </header>
+
+        <section class="card">
+            <h2>Metin Gönder</h2>
+            <form method="POST" id="text-form">
+                <textarea name="text" placeholder="Buraya yaz ya da yapıştır..." rows="5"></textarea>
+                <div class="button-container">
+                    <button type="button" class="send-btn" onclick="sendText()">Gönder</button>
+                </div>
+            </form>
+            <div class="result">
+                <strong>Gelen Metin:</strong>
+                <p id="dynamic-text">...</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Dosya Gönder (Fotoğraf vb.)</h2>
+            <form method="POST" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <button type="submit" class="upload-btn">Yükle</button>
+            </form>
+            <div class="uploaded">
+                <strong>Yüklenen Dosyalar:</strong>
+                <ul>
+                    {% for file in files %}
+                        <li><a href="{{ url_for('uploaded_file', filename=file) }}" target="_blank">{{ file }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+
+        <section class="card center">
+            <h2>Cihaza Bağlanmak İçin QR Kodu Tara</h2>
+            <img src="/static/qr.png" alt="QR Kodu" class="qr-image">
+            <p class="qr-url">{{ qr_url }}</p>
+        </section>
+
+        <footer>
+            <a href="/clear" class="clear-link">Tümünü Temizle</a>
+        </footer>
+    </div>
+
+    <script>
+        function sendText() {
+            const textValue = document.querySelector('textarea[name="text"]').value;
+
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({ text: textValue })
+            }).then(() => {
+                document.querySelector('textarea[name="text"]').value = '';
+            });
+        }
+
+        // Dinamik metin yenileme
+        setInterval(() => {
+            fetch('/get_text')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('dynamic-text').innerText = data.text;
+                });
+        }, 2000);
+    </script>
+</body>
+</html>
