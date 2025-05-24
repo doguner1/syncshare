@@ -30,6 +30,15 @@ SyncShare, kullanıcılar arasında hızlı ve kolay dosya/metin paylaşımı sa
   - Güvenli veri transferi
   - Şifreli bağlantı
   - Oturum yönetimi
+
+## Resimler
+
+<div align="center">
+  <img src="https://github.com/doguner1/GitImageData/blob/main/sync/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-05-24%20115433.png">
+  <img src="https://github.com/doguner1/GitImageData/blob/main/sync/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-05-24%20115508.png">
+</div>
+
+
 ## Proje Yapısı 🗂️
 ```
 syncshare/
@@ -52,12 +61,6 @@ dosyaların klasörü
 ```
 ## Kullanım 📖
 
-## Resimler
-
-<div align="center">
-  <img src="https://github.com/doguner1/GitImageData/blob/main/sync/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-05-24%20115433.png">
-  <img src="https://github.com/doguner1/GitImageData/blob/main/sync/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-05-24%20115508.png">
-</div>
 
 ### Temel Kullanım
 1. Uygulamayı başlatın
